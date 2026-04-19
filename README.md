@@ -1,14 +1,13 @@
-# Umami CN Builder Template
+# Umami CN Builder
 
-这是一套用于 **自动跟进官方 Umami 上游版本并构建大陆展示友好镜像** 的 GitHub Actions 模板。
+这是一个用于 **自动跟进官方 Umami 上游版本并构建符合中国法规的** 的自动化构建。
 
 它做的事情：
 
 - 每天检查官方 `umami-software/umami` 最新 tag
 - 拉取上游源码
-- 自动应用一层极小的中国大陆展示补丁
+- 自动替换对台用语
 - 构建并推送 GHCR 镜像
-- 不长期依赖第三方 fork
 
 ## 这套模板修改了什么
 
