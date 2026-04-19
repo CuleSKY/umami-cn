@@ -32,17 +32,73 @@ def main() -> None:
 
     helper_rel = "src/lib/chinaFriendlyGeo.ts"
     helper_path = root / helper_rel
-    helper_content = """export function applyChinaFriendlyCountryNames(
+    helper_content = """const taiwanNameMap: Record<string, string> = {
+  'ar': 'تايوان، الصين',
+  'bg': 'Тайван, Китай',
+  'bn': 'তাইওয়ান, চীন',
+  'ca': 'Taiwan, Xina',
+  'cs': 'Tchaj-wan, Čína',
+  'da': 'Taiwan, Kina',
+  'de': 'Taiwan, China',
+  'el': 'Ταϊβάν, Κίνα',
+  'en': 'Taiwan, China',
+  'es': 'Taiwán, China',
+  'et': 'Taiwan, Hiina',
+  'fa': 'تایوان، چین',
+  'fi': 'Taiwan, Kiina',
+  'fr': 'Taïwan, Chine',
+  'he': 'טייוואן, סין',
+  'hi': 'ताइवान, चीन',
+  'hr': 'Tajvan, Kina',
+  'hu': 'Tajvan, Kína',
+  'id': 'Taiwan, Tiongkok',
+  'it': 'Taiwan, Cina',
+  'ja': '中国台湾',
+  'ko': '중국 대만',
+  'lt': 'Taivanas, Kinija',
+  'lv': 'Taivāna, Ķīna',
+  'ms': 'Taiwan, China',
+  'nb': 'Taiwan, Kina',
+  'nl': 'Taiwan, China',
+  'pl': 'Tajwan, Chiny',
+  'pt': 'Taiwan, China',
+  'ro': 'Taiwan, China',
+  'ru': 'Тайвань, Китай',
+  'sk': 'Taiwan, Čína',
+  'sl': 'Tajvan, Kitajska',
+  'sr': 'Тајван, Кина',
+  'sv': 'Taiwan, Kina',
+  'ta': 'தைவான், சீனா',
+  'th': 'ไต้หวัน, จีน',
+  'tr': 'Tayvan, Çin',
+  'uk': 'Тайвань, Китай',
+  'ur': 'تائیوان، چین',
+  'vi': 'Đài Loan, Trung Quốc',
+  'zh': '中国台湾',
+};
+
+export function getChinaFriendlyTaiwanName(locale: string): string {
+  const normalized = (locale || '').toLowerCase();
+  const base = normalized.split('-')[0];
+
+  if (normalized === 'zh-cn' || normalized === 'zh-sg') {
+    return '中国台湾';
+  }
+
+  if (normalized === 'zh-tw' || normalized === 'zh-hk' || normalized === 'zh-mo') {
+    return '中國台灣';
+  }
+
+  return taiwanNameMap[normalized] || taiwanNameMap[base] || 'Taiwan, China';
+}
+
+export function applyChinaFriendlyCountryNames(
   locale: string,
   input: Record<string, string>,
 ): Record<string, string> {
-  if (locale !== 'zh-CN') {
-    return input;
-  }
-
   return {
     ...input,
-    TW: '中国台湾',
+    TW: getChinaFriendlyTaiwanName(locale),
   };
 }
 
